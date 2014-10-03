@@ -145,6 +145,44 @@
     color: red;
 }
 
+#hide-alert-btn {
+    cursor: pointer;
+    float: right;
+    font-size: 18px;
+}
+
+#loginformwrapper {
+    text-align: center;
+    padding-top: 75px;
+}
+
+#loginformwrapper a {
+    color: white;
+}
+
+#loginformwrapper div {
+    margin-top: 10px;
+}
+
+#loginformwrapper input {
+    color: #7d7d8e;
+    border-radius: 2px;
+    border:none;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.devise-button input {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 2px;
+    border:none;
+    padding: 5px;
+    color: white!important;
+    background: #EED169;
+}
+
 #userstatus {
     padding: 10px;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);

@@ -4,7 +4,7 @@
 	<td id="toolbar">
 		<div id="title">TimeInBoxes</div>
 		<% if notice %>
-		  <p class="alert alert-success"><%= notice %></p>
+		  <p class="alert alert-success"><%= notice %> <span onClick="hideAlert()" id="hide-alert-btn">x</span></p>
 		<% end %>
 		<% if alert %>
 		  <p class="alert alert-danger"><%= alert %></p>
@@ -146,6 +146,10 @@
 
     function createAddTodoBtn(id) {
     	return ""
+    }
+
+    function hideAlert() {
+    	$(".alert").hide();
     }
 
 </script>
