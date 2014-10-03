@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @box.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @box.description %>
+</p>
+
+<p>
+  <strong>Done:</strong>
+  <%= @box.done %>
+</p>
+
+<p>
+  <strong>Color:</strong>
+  <%= @box.color %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @box.start_date %>
+</p>
+
+<p>
+  <strong>Pos x:</strong>
+  <%= @box.pos_x %>
+</p>
+
+<p>
+  <strong>Pos y:</strong>
+  <%= @box.pos_y %>
+</p>
+
+<%= link_to 'Edit', edit_box_path(@box) %> |
+<%= link_to 'Back', boxes_path %>

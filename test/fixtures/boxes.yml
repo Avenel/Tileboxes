@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyString
+  done: false
+  color: MyString
+  start_date: 2014-10-03 13:36:13
+  pos_x: 1
+  pos_y: 1
+
+two:
+  name: MyString
+  description: MyString
+  done: false
+  color: MyString
+  start_date: 2014-10-03 13:36:13
+  pos_x: 1
+  pos_y: 1

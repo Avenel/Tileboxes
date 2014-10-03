@@ -1,0 +1,37 @@
+<h1>Listing boxes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Done</th>
+      <th>Color</th>
+      <th>Start date</th>
+      <th>Pos x</th>
+      <th>Pos y</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @boxes.each do |box| %>
+      <tr>
+        <td><%= box.name %></td>
+        <td><%= box.description %></td>
+        <td><%= box.done %></td>
+        <td><%= box.color %></td>
+        <td><%= box.start_date %></td>
+        <td><%= box.pos_x %></td>
+        <td><%= box.pos_y %></td>
+        <td><%= link_to 'Show', box %></td>
+        <td><%= link_to 'Edit', edit_box_path(box) %></td>
+        <td><%= link_to 'Destroy', box, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Box', new_box_path %>

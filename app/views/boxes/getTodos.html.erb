@@ -1,0 +1,17 @@
+<% @todos.all.each do |todo| %>
+	<li class="todolist-item <%= (todo.done)? 'todolist-item-done' : ''%>">
+		<table class="todolist-item-table">
+			<tr>
+				<td><%=todo.name%></td>
+				<td class="todomodifybtn">
+					<% if !todo.done then %>
+						<%= form_tag("/todos/" + todo.id.to_s, method: "put") do %>
+							<input name="todo[done]" type="hidden" value="1">
+							<%= submit_tag("X")%>
+						<% end %>
+					<% end %>
+				</td>
+			</tr>
+		</table>
+	</li>
+<% end %>

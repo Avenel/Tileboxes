@@ -1,0 +1,134 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ html {
+ 	min-height: 100%;
+ }
+
+
+#wrappertable {
+	height: 100vh;
+	width: 100vw;
+}
+
+ #todolistwrapper {
+ 	
+ }
+
+ #boxeswrapper {
+ 	 height: 100vh;
+ }
+
+ #todolist {
+ 	list-style-type: none;
+ 	padding: 0;
+ }
+
+ .todolist-item {
+ 	margin: 3px;
+ 	margin-left: 0px;
+	padding: 0.4em;
+	font-size: 1.0em;
+	border: 1px solid #aaaaaa;
+	color: #222222;
+    background: #FECA40;
+ }
+
+ .todolist-item-done {
+    color: white;
+    background: #aaaaaa;    
+ }
+
+ .todolist-item-done td {
+    text-decoration: line-through;
+}
+
+.todolist-item-table {
+    width: 100%;
+}
+
+.todomodifybtn {
+    width: 25px;
+}
+
+#feedback { font-size: 1.0em; }
+#todolist .ui-selecting { background: #FECA40; }
+#todolist .ui-selected { background: #F39814; color: white; }
+#todolist { list-style-type: none; margin: 0; padding: 0; }
+#todolist li { margin: 3px; padding: 0.4em; font-size: 1.0em; }
+
+
+/*/
+/* gridster
+/*/
+
+.gridster ul {
+    background-color: #EFEFEF;
+    list-style: none;
+}
+
+.gridster li {
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    line-height: 100%;
+    line-height: 20px;
+    color: #FFFFFF;
+}
+
+.gridster-box-selected {
+    border: 3px solid #F39814;    
+}
+
+.gridster {
+    margin: 0 auto;
+
+    opacity: .8;
+
+    -webkit-transition: opacity .6s;
+    -moz-transition: opacity .6s;
+    -o-transition: opacity .6s;
+    -ms-transition: opacity .6s;
+    transition: opacity .6s;
+}
+
+.gridster .gs-w {
+    background: #DDD;
+    cursor: pointer;
+}
+
+.gridster .player {
+    background: #BBB;
+}
+
+
+.gridster .preview-holder {
+    border: none!important;
+    background: red!important;
+}
+
+#addtodowrapper {
+    display: none;
+    margin-top: 25px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+}
+
+#addboxwrapper {
+    margin-top: 25px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;   
+}

@@ -1,0 +1,112 @@
+
+<table id="wrappertable">
+	<tr>
+	<td style="width: 30%; vertical-align: top; border-right: 1px solid #aaaaaa; padding: 10px;">
+		<div id="todolistwrapper">
+			<h2 id="boxtitle"> </h2>
+			<ul id="todolist"></ul>
+			<div id="addtodowrapper">
+				<h3>Add Todo</h3>
+				<%= form_for(@todo) do |f| %>	
+					<div class="field">
+					    <%= f.label :name %><br>
+					    <%= f.text_field :name %>
+				  	</div>
+
+			  		<div class="field">
+				    	<%= f.label :time %><br>
+				    	<%= f.number_field :time, :value => "0" %>
+				  	</div>
+
+				  	<%= f.hidden_field :box_id, :value => "" %>
+				  	<%= f.submit %>
+				<% end %>
+			</div>
+			<div id="addboxwrapper">
+				<h3>Add Box</h3>
+				<%= form_for(@box) do |f| %>
+				  <div class="field">
+				    <%= f.label :name %><br>
+				    <%= f.text_field :name %>
+				  </div>
+				  <div class="field">
+				    <%= f.label :color %><br>
+				    <%= f.text_field :color %>
+				  </div>
+				  <div class="field">
+				    <%= f.label :start_date %><br>
+				    <%= f.datetime_select :start_date %>
+				  </div>
+				  <div class="actions">
+				    <%= f.submit %>
+				  </div>
+				<% end %>
+			</div>
+		</div>
+	</td>
+
+	<td style="vertical-align: top;">
+		<div id="boxeswrapper">
+			<div class="gridster">
+				<ul></ul>
+			</div>
+		</div>
+	</td>
+	</tr>
+</table>
+
+
+<script>
+	var gridster;
+	var todos;
+	
+	$(document).ready(function() {
+		$(function() {
+		    $( "#todolist" ).selectable();
+	  	});
+	});
+
+
+    $(function(){
+
+      	gridster = $(".gridster > ul").gridster({
+         	widget_margins: [5, 5],
+      		widget_base_dimensions: [40, 40],
+
+      }).data('gridster');
+      	var widgets = [
+      		<% Box.all.each do |box| %>
+          		["<li id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=(@box_time[box.id] / 480.0).to_i * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\")'><%=@box_time[box.id]%></li>", <%=(@box_time[box.id] / 480.0).to_i%>, <%=(@box_time[box.id] / 480.0).to_i%>],	
+          	<% end %>
+      	];
+
+	  	$.each(widgets, function(i, widget){
+	      	gridster.add_widget.apply(gridster, widget)
+	  	});
+
+    });
+
+	/**
+		Show every related todo is list
+	*/
+    function getTodosForBox(id, name) {
+    	$(".gridster li").removeClass("gridster-box-selected");
+    	$("#box_" + id).addClass("gridster-box-selected");
+    	$.ajax({
+		  url: "/boxes/"+id+"/todos",
+		  cache: false
+		})
+		  .done(function( html ) {
+		  	$("#boxtitle").html(name + "<a data-confirm='Are you sure?'' data-method='delete' href='/boxes/"+id+"' rel='nofollow'>X</a>");
+		    $("#todolist").html(html);
+		    $("#commands").html(createAddTodoBtn(id));
+		    $("#todo_box_id").val(id)
+		    $("#addtodowrapper").show();
+		  });
+    }
+
+    function createAddTodoBtn(id) {
+    	return ""
+    }
+
+</script>
