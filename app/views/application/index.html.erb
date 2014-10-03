@@ -60,7 +60,7 @@
 		</div>
 	</td>
 
-	<td style="vertical-align: top;">
+	<td style="vertical-align: middle;">
 		<div id="boxeswrapper">
 			<div class="gridster">
 				<ul></ul>
@@ -95,7 +95,7 @@
       }).data('gridster');
       	var widgets = [
       		<% Box.all.each do |box| %>
-          		["<li id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=(@box_time[box.id] / 480.0).to_i * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\")'><%=@box_time[box.id]%></li>", <%=(@box_time[box.id] / 480.0).to_i%>, <%=(@box_time[box.id] / 480.0).to_i%>],	
+          		["<li id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=((@box_time[box.id] <= 480)? 1 : (@box_time[box.id] / 480.0).to_i) * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\")'><%=@box_time[box.id]%></li>", <%=(@box_time[box.id] / 480.0).to_i%>, <%=(@box_time[box.id] / 480.0).to_i%>],	
           	<% end %>
       	];
 
