@@ -38,6 +38,7 @@
 
 #wrappertable {
 	height: 100vh;
+    max-height: 100vh;
 	width: 100vw;
     border: none;
     border-spacing: 0;
@@ -48,7 +49,7 @@
 }
 
 #toolbar {
-    width: 30%; 
+    width: 30%;
     vertical-align: top; 
     padding: 0;
     background: #4f4a91;
@@ -56,11 +57,11 @@
 }
 
  #todolistwrapper {
- 	
+    overflow:scroll;
  }
 
  #boxeswrapper {
-    margin: 0 auto;
+    margin: 75px;
     background: white;
  }
 
@@ -80,7 +81,7 @@
     color: white;
 }
 
- .todolist-item {
+.todolist-item {
  	margin: 3px;
  	margin-left: 0px;
 	padding: 0.4em;
@@ -89,7 +90,7 @@
 	color: white;
     background: #A588EB;
     border-radius: 2px;
- }
+}
 
  .todolist-item-done {
     color: white;
@@ -131,6 +132,28 @@
 #todolist { list-style-type: none; margin: 0; padding: 0; }
 #todolist li { margin: 3px; padding: 0.4em; font-size: 1.0em; }
 
+.alert {
+    padding : 10px;
+    border: 1px dashed rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.alert alert-success {
+    color: white;
+}
+
+.alert alert-danger {
+    color: red;
+}
+
+#userstatus {
+    padding: 10px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+#userstatus a{
+    color: white;
+}
 
 /*/
 /* gridster

@@ -3,6 +3,26 @@
 	<tr>
 	<td id="toolbar">
 		<div id="title">TimeInBoxes</div>
+		<% if notice %>
+		  <p class="alert alert-success"><%= notice %></p>
+		<% end %>
+		<% if alert %>
+		  <p class="alert alert-danger"><%= alert %></p>
+		<% end %>
+
+		<div id="userstatus">
+			<p class="navbar-text pull-right">
+			<% if user_signed_in? %>
+			  <strong><%= current_user.email %></strong>. <br/>
+			  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+			  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+			<% else %>
+			  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+			  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+			<% end %>
+			</p>
+		</div>
+
 		<div id="todolistwrapper">
 			<h2 id="boxtitle"> </h2>
 			<ul id="todolist"></ul>
@@ -60,7 +80,7 @@
 		</div>
 	</td>
 
-	<td style="vertical-align: middle;">
+	<td style="vertical-align: top;">
 		<div id="boxeswrapper">
 			<div class="gridster">
 				<ul></ul>
