@@ -1,7 +1,8 @@
 
 <table id="wrappertable">
 	<tr>
-	<td style="width: 30%; vertical-align: top; border-right: 1px solid #aaaaaa; padding: 10px;">
+	<td id="toolbar">
+		<div id="title">TimeInBoxes</div>
 		<div id="todolistwrapper">
 			<h2 id="boxtitle"> </h2>
 			<ul id="todolist"></ul>
@@ -9,33 +10,47 @@
 				<h3>Add Todo</h3>
 				<%= form_for(@todo) do |f| %>	
 					<div class="field">
-					    <%= f.label :name %><br>
-					    <%= f.text_field :name %>
+					    <table>
+				    		<tr>
+				    			<td><%= f.label :name %></td>
+					    		<td><%= f.text_field :name %></td>
+					    	</tr>
+					    </table>
 				  	</div>
 
 			  		<div class="field">
-				    	<%= f.label :time %><br>
-				    	<%= f.number_field :time, :value => "0" %>
+				    	<table>
+				    		<tr>
+				    			<td><%= f.label :time %></td>
+				    			<td><%= f.number_field :time, :value => "0" %></td>
+				    		</tr>
+				    	</table>
 				  	</div>
 
 				  	<%= f.hidden_field :box_id, :value => "" %>
-				  	<%= f.submit %>
+				  	<div class="actions">
+				    	<%= f.submit %>
+				 	</div>
 				<% end %>
 			</div>
 			<div id="addboxwrapper">
 				<h3>Add Box</h3>
 				<%= form_for(@box) do |f| %>
 				  <div class="field">
-				    <%= f.label :name %><br>
-				    <%= f.text_field :name %>
+				    <table>
+				    		<tr>
+				    			<td><%= f.label :name %></td>
+				    			<td><%= f.text_field :name %></td>
+					    	</tr>
+					    </table>
 				  </div>
 				  <div class="field">
-				    <%= f.label :color %><br>
-				    <%= f.text_field :color %>
-				  </div>
-				  <div class="field">
-				    <%= f.label :start_date %><br>
-				    <%= f.datetime_select :start_date %>
+				    <table>
+				    		<tr>
+				    			<td><%= f.label :color %></td>
+				    			<td><%= f.text_field :color %></td>
+					    	</tr>
+					    </table>
 				  </div>
 				  <div class="actions">
 				    <%= f.submit %>
@@ -63,6 +78,10 @@
 	$(document).ready(function() {
 		$(function() {
 		    $( "#todolist" ).selectable();
+	  	});
+
+	  	$(function() {
+		    $( "#box_start_date" ).datepicker();
 	  	});
 	});
 

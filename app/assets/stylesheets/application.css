@@ -18,10 +18,41 @@
  	min-height: 100%;
  }
 
+ body {
+    margin: 0;
+    padding: 0;
+ }
+
+ * {
+    font-family: 'PT Sans', sans-serif;
+ }
+
+#title {
+    color: white;
+    font-size: 36px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    font-family: 'Lobster', cursive;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
 
 #wrappertable {
 	height: 100vh;
 	width: 100vw;
+    border: none;
+    border-spacing: 0;
+}
+
+#wrappertable td {
+    padding: 0;
+}
+
+#toolbar {
+    width: 30%; 
+    vertical-align: top; 
+    padding: 0;
+    background: #4f4a91;
+    color: #ffffff;
 }
 
  #todolistwrapper {
@@ -29,13 +60,25 @@
  }
 
  #boxeswrapper {
- 	 height: 100vh;
+    margin: 0 auto;
+    background: white;
  }
 
  #todolist {
  	list-style-type: none;
  	padding: 0;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    color: white;
  }
+
+#boxtitle {
+    padding: 10px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+#boxtitle a {
+    color: white;
+}
 
  .todolist-item {
  	margin: 3px;
@@ -43,8 +86,9 @@
 	padding: 0.4em;
 	font-size: 1.0em;
 	border: 1px solid #aaaaaa;
-	color: #222222;
-    background: #FECA40;
+	color: white;
+    background: #A588EB;
+    border-radius: 2px;
  }
 
  .todolist-item-done {
@@ -72,9 +116,18 @@
     width: 25px;
 }
 
+.todomodifybtn input {
+    border: none;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 #feedback { font-size: 1.0em; }
-#todolist .ui-selecting { background: #FECA40; }
-#todolist .ui-selected { background: #F39814; color: white; }
+#todolist .ui-selecting { background: #EED169; }
+#todolist .ui-selected { background: #EED169; color: white; }
 #todolist { list-style-type: none; margin: 0; padding: 0; }
 #todolist li { margin: 3px; padding: 0.4em; font-size: 1.0em; }
 
@@ -132,11 +185,50 @@
     display: none;
     margin-top: 25px;
     padding: 10px;
-    border: 1px solid #aaaaaa;
+    border: 1px dashed rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 10px;
 }
 
 #addboxwrapper {
     margin-top: 25px;
     padding: 10px;
-    border: 1px solid #aaaaaa;   
+    border: 1px dashed rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+}
+
+.field td:first-child {
+    width: 75px;
+    font-size: 16px;
+}
+
+.field td:nth-child(2) {
+    width: 150px;
+}
+
+.field td:nth-child(2) input{
+    width: 100%;
+    color: #7d7d8e;
+    border-radius: 2px;
+    border:none;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.actions {
+    text-align: right;
+}
+
+.actions input {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 2px;
+    border:none;
+    padding: 5px;
+    color: white;
+    background: #EED169;
+    width: 50%;
+    margin-right: 20px;
 }
