@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141003214324) do
+ActiveRecord::Schema.define(version: 20141003224706) do
 
   create_table "boxes", force: true do |t|
     t.string   "name"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20141003214324) do
     t.integer  "pos_y"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id",     default: 1
   end
 
   create_table "todos", force: true do |t|
@@ -33,6 +34,7 @@ ActiveRecord::Schema.define(version: 20141003214324) do
     t.boolean  "done"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id",     default: 1
   end
 
   create_table "users", force: true do |t|

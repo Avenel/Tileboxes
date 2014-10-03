@@ -5,7 +5,7 @@ class BoxesController < ApplicationController
   # GET /boxes
   # GET /boxes.json
   def index
-    @boxes = Box.all
+    @boxes = Box.where(user_id: current_user.id)
   end
 
   # GET /boxes/1
@@ -26,6 +26,7 @@ class BoxesController < ApplicationController
   # POST /boxes.json
   def create
     @box = Box.new(box_params)
+    @box.user_id = current_user.id
 
     respond_to do |format|
       if @box.save
@@ -42,12 +43,14 @@ class BoxesController < ApplicationController
   # PATCH/PUT /boxes/1.json
   def update
     respond_to do |format|
-      if @box.update(box_params)
-        format.html { redirect_to @box, notice: 'Box was successfully updated.' }
-        format.json { render :show, status: :ok, location: @box }
-      else
-        format.html { render :edit }
-        format.json { render json: @box.errors, status: :unprocessable_entity }
+      if (@box.user_id == current_user.id) then
+        if @box.update(box_params)
+          format.html { redirect_to @box, notice: 'Box was successfully updated.' }
+          format.json { render :show, status: :ok, location: @box }
+        else
+          format.html { render :edit }
+          format.json { render json: @box.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

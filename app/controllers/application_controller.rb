@@ -9,13 +9,15 @@ class ApplicationController < ActionController::Base
     @box = Box.new
     
   	@box_time = Array.new
-    	Box.all.each do |box| 
+    	Box.where(user_id: current_user.id).each do |box| 
   		@box_time[box.id] = 0
   	end
 
-  	Todo.all.each do |todo|
-  		@box_time[todo.box_id] += (todo.done)? 0 : todo.time
-	end
+    Todo.where(user_id: current_user.id).each do |todo|
+      if (!@box_time[todo.box_id].nil?) then
+  	    @box_time[todo.box_id] += (todo.done)? 0 : todo.time
+      end
+    end
 
   end
 

@@ -4,7 +4,7 @@ class TodosController < ApplicationController
   # GET /todos
   # GET /todos.json
   def index
-    @todos = Todo.all
+    @todos = Todo.where(user_id: current_user.id)
   end
 
   # GET /todos/1
@@ -25,14 +25,17 @@ class TodosController < ApplicationController
   # POST /todos.json
   def create
     @todo = Todo.new(todo_params)
+    @todo.user_id = current_user.id
 
     respond_to do |format|
-      if @todo.save
-        format.html { redirect_to "/index", notice: 'Todo was successfully created.' }
-        format.json { render :show, status: :created, location: @todo }
-      else
-        format.html { render :new }
-        format.json { render json: @todo.errors, status: :unprocessable_entity }
+      if (@todo.user_id == current_user.id) then
+        if @todo.save
+          format.html { redirect_to "/index", notice: 'Todo was successfully created.' }
+          format.json { render :show, status: :created, location: @todo }
+        else
+          format.html { render :new }
+          format.json { render json: @todo.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

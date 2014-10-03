@@ -114,7 +114,7 @@
 
       }).data('gridster');
       	var widgets = [
-      		<% Box.all.each do |box| %>
+      		<% Box.where(user_id: current_user.id).each do |box| %>
           		["<li id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=((@box_time[box.id] <= 480)? 1 : (@box_time[box.id] / 480.0).to_i) * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\")'><%=@box_time[box.id]%></li>", <%=(@box_time[box.id] / 480.0).to_i%>, <%=(@box_time[box.id] / 480.0).to_i%>],	
           	<% end %>
       	];
