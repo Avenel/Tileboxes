@@ -97,7 +97,7 @@
 		  cache: false
 		})
 		  .done(function( html ) {
-		  	$("#boxtitle").html(name + "<a data-confirm='Are you sure?'' data-method='delete' href='/boxes/"+id+"' rel='nofollow'>X</a>");
+		  	$("#boxtitle").html(name + "<a data-confirm='Are you sure?'' data-method='delete' href='/boxes/"+id+"' rel='nofollow' style='float:right;'>X</a>");
 		    $("#todolist").html(html);
 		    $("#commands").html(createAddTodoBtn(id));
 		    $("#todo_box_id").val(id)

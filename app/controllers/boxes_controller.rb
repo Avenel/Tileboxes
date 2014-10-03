@@ -63,7 +63,7 @@ class BoxesController < ApplicationController
 
   def getTodos
     @box = Box.find(params[:id])
-    @todos = Todo.where(box_id: @box.id)
+    @todos = Todo.where(box_id: @box.id).order("done")
     respond_to do |format|
       format.html {render :getTodos, layout: false}
     end

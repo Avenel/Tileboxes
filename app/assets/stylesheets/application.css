@@ -56,6 +56,14 @@
     text-decoration: line-through;
 }
 
+.todolist-item-name {
+    font-weight: bold;
+}
+
+.todolist-item-time {
+    text-align: right;
+}
+
 .todolist-item-table {
     width: 100%;
 }
