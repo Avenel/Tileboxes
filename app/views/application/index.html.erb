@@ -24,7 +24,12 @@
 		</div>
 
 		<div id="todolistwrapper">
-			<h2 id="boxtitle"> </h2>
+			<table id="boxtitleWrapper">
+				<tr><td><h2 id="boxtitle"> </h2></td>
+					<td id="colorPickerBoxTitleWrapper"></td>
+					<td id="deleteBoxWrapper"></td>
+				</tr>
+			</table>
 			<ul id="todolist"></ul>
 			<div id="addtodowrapper">
 				<h3>Add Todo</h3>
@@ -68,7 +73,12 @@
 				    <table>
 				    		<tr>
 				    			<td><%= f.label :color %></td>
-				    			<td><%= f.text_field :color %></td>
+				    			<td><div id="colorPicker">
+							        <a class="color"><div class="colorInner"></div></a>
+							        <div class="track" style="background-image:url(../images/text-color.png)"></div>
+							        <ul class="dropdown"><li></li></ul>
+							        <input id="box_color" name="box[color]" class="colorInput" type="hidden">
+							    </div></td>
 					    	</tr>
 					    </table>
 				  </div>
@@ -103,6 +113,8 @@
 	  	$(function() {
 		    $( "#box_start_date" ).datepicker();
 	  	});
+
+	  	$("#colorPicker").tinycolorpicker();
 	});
 
 
@@ -115,7 +127,7 @@
       }).data('gridster');
       	var widgets = [
       		<% Box.where(user_id: current_user.id).each do |box| %>
-          		["<li id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=((@box_time[box.id] <= 480)? 1 : (@box_time[box.id] / 480.0).to_i) * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\")'><%=@box_time[box.id]%></li>", <%=(@box_time[box.id] / 480.0).to_i%>, <%=(@box_time[box.id] / 480.0).to_i%>],	
+          		["<li id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=((@box_time[box.id] <= 480)? 1 : (@box_time[box.id] / 480.0).to_i) * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\", \"<%=box.color%>\")'><%=@box_time[box.id]%></li>", <%=(@box_time[box.id] / 480.0).to_i%>, <%=(@box_time[box.id] / 480.0).to_i%>],	
           	<% end %>
       	];
 
@@ -128,7 +140,7 @@
 	/**
 		Show every related todo is list
 	*/
-    function getTodosForBox(id, name) {
+    function getTodosForBox(id, name, color) {
     	$(".gridster li").removeClass("gridster-box-selected");
     	$("#box_" + id).addClass("gridster-box-selected");
     	$.ajax({
@@ -136,16 +148,40 @@
 		  cache: false
 		})
 		  .done(function( html ) {
-		  	$("#boxtitle").html(name + "<a data-confirm='Are you sure?'' data-method='delete' href='/boxes/"+id+"' rel='nofollow' style='float:right;'>X</a>");
+		  	var colorpickerForm = "<%= j form_tag('/boxes/', method: 'put', :id => 'colorPickerBoxTitleForm') do %> <% end %>";
+		  	var colorpickerDiv = "<div id='colorPicker'>" +
+							        "<a class='color'><div class='colorInner'></div></a>" +
+							        "<div class='track' style='background-image:url(../images/text-color.png)'></div>" + 
+							        "<ul class='dropdown'><li></li></ul>" + 
+							        "<input id='box_color' name='box[color]' class='colorInput' type='hidden'>" + 
+							    "</div>";
+		  				
+		  	$("#boxtitle").html(name);
+		  	$("#deleteBoxWrapper").html("<a data-confirm='Are you sure?'' data-method='delete' href='/boxes/"+id+"' rel='nofollow' style='float:right;'>X</a>");
+		  	$("#colorPickerBoxTitleWrapper").html(colorpickerForm);
+		  	$("#colorPickerBoxTitleForm").append(colorpickerDiv);
 		    $("#todolist").html(html);
-		    $("#commands").html(createAddTodoBtn(id));
 		    $("#todo_box_id").val(id)
 		    $("#addtodowrapper").show();
-		  });
-    }
+		    $("#colorPicker").tinycolorpicker();
+		    $("#colorPickerBoxTitleWrapper .colorInner").css("backgroundColor", color);
+		    $("#colorPickerBoxTitleWrapper .colorInput").val(color);
 
-    function createAddTodoBtn(id) {
-    	return ""
+		    var $box = $('#colorPickerBoxTitleWrapper #colorPicker');
+		    $box.tinycolorpicker();
+
+		    $box.bind("change", function()
+		    {
+		        // update Box
+		        $.ajax({
+				  type: "PUT",
+				  url: "/boxes/"+id,
+				  data: $("#colorPickerBoxTitleForm").serializeArray(),
+				  dataType: "script"
+				});
+		    });
+
+		  });
     }
 
     function hideAlert() {

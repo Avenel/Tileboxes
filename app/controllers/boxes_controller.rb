@@ -1,5 +1,5 @@
 class BoxesController < ApplicationController
-  before_action :authenticate_user!, :set_box, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, :set_box, :setupBoxTimes, only: [:show, :edit, :update, :destroy]
 
 
   # GET /boxes
@@ -42,13 +42,16 @@ class BoxesController < ApplicationController
   # PATCH/PUT /boxes/1
   # PATCH/PUT /boxes/1.json
   def update
+    @boxes = Box.where(user_id: current_user.id)
+
     respond_to do |format|
       if (@box.user_id == current_user.id) then
         if @box.update(box_params)
-          format.html { redirect_to @box, notice: 'Box was successfully updated.' }
+          format.html { render :getGridBoxes, notice: 'Box was successfully updated.', layout: false}
           format.json { render :show, status: :ok, location: @box }
+          format.js {render :getGridBoxes, layout: false}
         else
-          format.html { render :edit }
+          format.html { redirect_to "/index", notice: 'error' }
           format.json { render json: @box.errors, status: :unprocessable_entity }
         end
       end
@@ -73,6 +76,10 @@ class BoxesController < ApplicationController
     end
   end
 
+  def getGridBoxes
+    @boxes = Box.where(user_id: current_user.id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_box
@@ -82,5 +89,18 @@ class BoxesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def box_params
       params.require(:box).permit(:name, :description, :done, :color, :start_date, :pos_x, :pos_y)
+    end
+
+    def setupBoxTimes
+      @box_time = Array.new
+        Box.where(user_id: current_user.id).each do |box| 
+        @box_time[box.id] = 0
+      end
+
+      Todo.where(user_id: current_user.id).each do |todo|
+        if (!@box_time[todo.box_id].nil?) then
+          @box_time[todo.box_id] += (todo.done)? 0 : todo.time
+        end
+      end
     end
 end
