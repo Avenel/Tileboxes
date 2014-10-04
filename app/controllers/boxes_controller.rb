@@ -1,5 +1,5 @@
 class BoxesController < ApplicationController
-  before_action :authenticate_user!, :set_box, :setupBoxTimes, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, :set_box, only: [:show, :edit, :update, :destroy, :getGridBoxes]
 
 
   # GET /boxes
@@ -27,16 +27,19 @@ class BoxesController < ApplicationController
   def create
     @box = Box.new(box_params)
     @box.user_id = current_user.id
+    @box.save
+
+    @boxes = Box.where(user_id: current_user.id)
 
     respond_to do |format|
       if @box.save
-        format.html { redirect_to "/index", notice: 'Box was successfully created.' }
+        format.js {render :getGridBoxes, layout: false}
         format.json { render :show, status: :created, location: @box }
       else
         format.html { render :new }
         format.json { render json: @box.errors, status: :unprocessable_entity }
       end
-    end
+    end    
   end
 
   # PATCH/PUT /boxes/1
@@ -63,8 +66,9 @@ class BoxesController < ApplicationController
   def destroy
     @box.destroy
     respond_to do |format|
-      format.html { redirect_to "/index", notice: 'Box was successfully destroyed.' }
+      format.html { render "/boxes/getGridBoxes.js.erb" }
       format.json { head :no_content }
+      format.js {render "/boxes/getGridBoxes.js.erb", layout: false}
     end
   end
 
@@ -79,11 +83,11 @@ class BoxesController < ApplicationController
   def getGridBoxes
     @boxes = Box.where(user_id: current_user.id)
   end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_box
-      @box = Box.find(params[:id])
+        @box = Box.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -91,16 +95,4 @@ class BoxesController < ApplicationController
       params.require(:box).permit(:name, :description, :done, :color, :start_date, :pos_x, :pos_y)
     end
 
-    def setupBoxTimes
-      @box_time = Array.new
-        Box.where(user_id: current_user.id).each do |box| 
-        @box_time[box.id] = 0
-      end
-
-      Todo.where(user_id: current_user.id).each do |todo|
-        if (!@box_time[todo.box_id].nil?) then
-          @box_time[todo.box_id] += (todo.done)? 0 : todo.time
-        end
-      end
-    end
 end

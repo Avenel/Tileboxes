@@ -1,14 +1,14 @@
 <% @todos.all.each do |todo| %>
-	<li class="todolist-item <%= (todo.done)? 'todolist-item-done' : ''%>">
+	<li class="todolist-item <%= (todo.done)? 'todolist-item-done' : ''%>" id="todolist-item_<%=todo.id.to_s%>">
 		<table class="todolist-item-table">
 			<tr>
 				<td class="todolist-item-name"><%=todo.name%></td>
 				<td class="todolist-item-time"><%=todo.time%></td>
 				<td class="todomodifybtn">
 					<% if !todo.done then %>
-						<%= form_tag("/todos/" + todo.id.to_s, method: "put") do %>
+						<%= form_tag("/todos/" + todo.id.to_s, method: "put", id: "setDoneForm_" + todo.id.to_s) do %>
 							<input name="todo[done]" type="hidden" value="1">
-							<%= submit_tag("X")%>
+							<input type="submit" onclick="setDone(<%= todo.id %>)" value="X"></div>
 						<% end %>
 					<% end %>
 				</td>
@@ -16,3 +16,22 @@
 		</table>
 	</li>
 <% end %>
+
+<script>
+	<%= render  template: "/boxes/getGridBoxes.js.erb" %>
+
+	function setDone(id) {
+    	$("#setDoneForm_" + id).submit(function() {
+    		$.ajax({
+			  type: "PUT",
+			  url: "/todos/" + id,
+			  data: $("#setDoneForm_" + id).serializeArray(),
+			})
+			.done(function( html ) {
+				$("#todolist").html(html);
+			});
+
+			return false;
+		});	
+    }
+</script>

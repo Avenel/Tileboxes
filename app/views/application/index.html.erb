@@ -54,7 +54,7 @@
 
 				  	<%= f.hidden_field :box_id, :value => "" %>
 				  	<div class="actions">
-				    	<%= f.submit %>
+				    	<input type="submit" onclick="createTodo()" value="Create Todo"></div>
 				 	</div>
 				<% end %>
 			</div>
@@ -83,7 +83,7 @@
 					    </table>
 				  </div>
 				  <div class="actions">
-				    <%= f.submit %>
+				    <input type="submit" onclick="createBox()" value="Create Box"></div>
 				  </div>
 				<% end %>
 			</div>
@@ -157,7 +157,7 @@
 							    "</div>";
 		  				
 		  	$("#boxtitle").html(name);
-		  	$("#deleteBoxWrapper").html("<a data-confirm='Are you sure?'' data-method='delete' href='/boxes/"+id+"' rel='nofollow' style='float:right;'>X</a>");
+		  	$("#deleteBoxWrapper").html("<a data-confirm='Are you sure?' style='float:right; cursor:pointer;' onclick='deleteBox("+ id + ")'>X</a>");
 		  	$("#colorPickerBoxTitleWrapper").html(colorpickerForm);
 		  	$("#colorPickerBoxTitleForm").append(colorpickerDiv);
 		    $("#todolist").html(html);
@@ -188,4 +188,56 @@
     	$(".alert").hide();
     }
 
+    function createTodo() {
+    	$("#new_todo").submit(function() {
+    		$.ajax({
+			  type: "POST",
+			  url: "/todos",
+			  data: $("#new_todo").serializeArray(),
+			})
+			.done(function( html ) {
+				$("#todolist").html(html);
+			});
+
+			$("#new_todo").unbind();
+			return false;
+		});	
+    }
+
+    function createBox() {
+    	$("#new_box").submit(function() {
+    		$.ajax({
+			  type: "POST",
+			  url: "/boxes",
+			  data: $("#new_box").serializeArray(),
+			  dataType: "script"
+			})
+			.done(function( html ) {
+				$("#box_name").val("");
+				$("#boxtitle").html("");
+				$("#todolist").html("");
+				$("#deleteBoxWrapper").html("");
+				$("#colorPickerBoxTitleWrapper").html("");
+				$("#addtodowrapper").hide();
+			});
+
+			$("#new_todo").unbind();
+			return false;
+		});
+    }
+
+    function deleteBox(id) {
+		$.ajax({
+				  type: "DELETE",
+				  url: "/boxes/" + id,
+				  dataType: "script"
+				})
+		.done(function( html ) {
+			$("#boxtitle").html("");
+			$("#deleteBoxWrapper").html("");
+			$("#colorPickerBoxTitleWrapper").html("");
+			$("#addtodowrapper").hide();
+		});
+		return false;
+	}
 </script>

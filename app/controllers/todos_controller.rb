@@ -26,11 +26,13 @@ class TodosController < ApplicationController
   def create
     @todo = Todo.new(todo_params)
     @todo.user_id = current_user.id
+    @todos = Todo.where(user_id: current_user.id, box_id: @todo.box_id).order("done DESC")
+    @boxes = Box.where(user_id: current_user.id)
 
     respond_to do |format|
       if (@todo.user_id == current_user.id) then
         if @todo.save
-          format.html { redirect_to "/index", notice: 'Todo was successfully created.' }
+          format.html { render "/boxes/getTodos.html.erb", layout: false }
           format.json { render :show, status: :created, location: @todo }
         else
           format.html { render :new }
@@ -43,9 +45,12 @@ class TodosController < ApplicationController
   # PATCH/PUT /todos/1
   # PATCH/PUT /todos/1.json
   def update
+    @todos = Todo.where(user_id: current_user.id, box_id: @todo.box_id).order("done DESC")
+    @boxes = Box.where(user_id: current_user.id)
+    
     respond_to do |format|
       if @todo.update(todo_params)
-        format.html { redirect_to "/index", notice: 'Todo was successfully updated.' }
+        format.html { render "/boxes/getTodos.html.erb", layout: false }
         format.json { render :show, status: :ok, location: @todo }
       else
         format.html { render :edit }

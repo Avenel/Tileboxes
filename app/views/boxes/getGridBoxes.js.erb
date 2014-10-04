@@ -1,3 +1,5 @@
+<% setupBoxTimes %> 
+
 gridster = $(".gridster > ul").gridster({
 			         	widget_margins: [5, 5],
 			      		widget_base_dimensions: [40, 40],
@@ -5,7 +7,7 @@ gridster = $(".gridster > ul").gridster({
 gridster.remove_all_widgets();
 
 var widgets = [
-<% @boxes.each do |box| %>
+<% Box.where(user_id: current_user.id).each do |box| %>
 	["<li id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=((@box_time[box.id] <= 480)? 1 : (@box_time[box.id] / 480.0).to_i) * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\", \"<%=box.color%>\")'><%=@box_time[box.id]%></li>", <%=(@box_time[box.id] / 480.0).to_i%>, <%=(@box_time[box.id] / 480.0).to_i%>],
 <% end %> ];
 
