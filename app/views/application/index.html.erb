@@ -167,7 +167,7 @@
       	var widgets = [
       		<% Box.where(user_id: current_user.id).each do |box| %>
       			<% time = @box_time[box.id] %>
-				<% timePerBox = 120 %>
+				<% timePerBox = 60 %>
 				<% boxes = time / timePerBox %>
 				<% boxes = ((boxes <= 0)? 1 : boxes) %>
 				<% primeNumbers = (boxes == 1)? [ [1, 1] ] : boxes.prime_division %>
