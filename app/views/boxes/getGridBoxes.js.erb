@@ -17,12 +17,15 @@ gridster = $(".gridster > ul").gridster({
 			        }).data('gridster');
 gridster.remove_all_widgets();
 
+
 var widgets = [
 <% Box.where(user_id: current_user.id).each do |box| %>
-	["<li id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=((@box_time[box.id] <= 480)? 1 : (@box_time[box.id] / 480.0).to_i) * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\", \"<%=box.color%>\")'><%=@box_time[box.id]%></li>", 
+	["<li class='<%=(((!@box.nil?) && @box.id == box.id)? 'gridster-box-selected' : '')%>' id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=((@box_time[box.id] <= 480)? 1 : (@box_time[box.id] / 480.0).to_i) * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\", \"<%=box.color%>\")'><%=@box_time[box.id]%></li>", 
 		<%=(@box_time[box.id] / 480.0).to_i%>, <%=(@box_time[box.id] / 480.0).to_i%>, <%=box.pos_x%>, <%=box.pos_y%>],
 <% end %> ];
 
 $.each(widgets, function(i, widget){
 	gridster.add_widget.apply(gridster, widget)
 });
+
+console.log("refreshed grid");

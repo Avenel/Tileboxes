@@ -33,6 +33,8 @@
         	'readOnly' : true,
         	"fgColor":"#EED169"
         });
+
+        $("#box_" + <%=@box.id.to_s%>).addClass("gridster-box-selected");
 	});
 
 	function setDone(id) {

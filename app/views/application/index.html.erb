@@ -140,6 +140,10 @@
       	gridster = $(".gridster > ul").gridster({
          	widget_margins: [5, 5],
       		widget_base_dimensions: [40, 40],
+      		max_cols: 12,
+      		min_cols: 12,
+      		min_rows: 12,
+      		max_rows: 12,
       		serialize_params:
       			function ($w, wgd) {
 			    return {
@@ -280,11 +284,19 @@
 
 
 	function updateBoxPosition(e, ui, id) {
+		var selected = $(".gridster-box-selected");
+		var lastId = -1;
+		if (selected.length > 0) {
+			lastId = $(".gridster-box-selected").attr("id").replace("box_", "");
+		}
+
+		console.log(lastId);
+
 		// save new position
 		$.ajax({
 		  type: "PUT",
 		  url: "/boxes/updateBoxes",
-		  data: {data: gridster.serialize()},
+		  data: {data: gridster.serialize(), selected: lastId},
 		  dataType: "script"
 		})
 		.done(function( html ) {

@@ -81,6 +81,10 @@ class BoxesController < ApplicationController
   end
 
   def updateBoxes
+    if (params['selected'].to_i >= 0) then 
+      @box = Box.find(params['selected'])
+    end
+
     # parse hash and update box positions
     data = params['data']
     data.each do |box|
