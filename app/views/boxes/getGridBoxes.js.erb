@@ -21,9 +21,9 @@ gridster.remove_all_widgets();
 var widgets = [
 <% Box.where(user_id: current_user.id).each do |box| %>
 	<% time = @box_time[box.id] %>
-	<% size_x = (time / 120) % 6 %>
+	<% size_x = ((time / 120 > 5)? 5 : (time / 120)) %>
 	<% time -= size_x * 120 %>
-	<% size_y = (time / 120) % 6 %>
+	<% size_y = (time / 120) %>
 	["<li class='<%=(((!@box.nil?) && @box.id == box.id)? 'gridster-box-selected' : '')%>' id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=((@box_time[box.id] <= 480)? 1 : (@box_time[box.id] / 480.0).to_i) * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\", \"<%=box.color%>\")'><%=@box_time[box.id]%></li>", 
 		<%=size_x%>, <%=size_y%>, <%=box.pos_x%>, <%=box.pos_y%>],
 <% end %> ];
