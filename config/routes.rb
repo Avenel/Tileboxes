@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   
   devise_for :users
   get '/boxes/:id/todos' => 'boxes#getTodos'
+  put '/boxes/updateBoxes' => 'boxes#updateBoxes'
   
   resources :boxes
   resources :todos

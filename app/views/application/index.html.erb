@@ -82,6 +82,10 @@
 					    	</tr>
 					    </table>
 				  </div>
+
+				  <input id="box_pos_x" name="box[pos_x]" type="hidden" value="0">
+				  <input id="box_pos_y" name="box[pos_y]" type="hidden" value="0">
+
 				  <div class="actions">
 				    <input type="submit" onclick="createBox()" value="Create Box"></div>
 				  </div>
@@ -104,6 +108,7 @@
 <script>
 	var gridster;
 	var todos;
+	var draggedBoxId;
 	
 	$(document).ready(function() {
 		$(function() {
@@ -135,11 +140,29 @@
       	gridster = $(".gridster > ul").gridster({
          	widget_margins: [5, 5],
       		widget_base_dimensions: [40, 40],
-
+      		serialize_params:
+      			function ($w, wgd) {
+			    return {
+			      id: $w.prop('id'),
+			      col: wgd.col,
+			      row: wgd.row
+			    };
+  			},
+      		draggable: {
+      			start: function(e, ui) {
+      					draggedBoxId = e.toElement.id;
+  						draggedBoxId = draggedBoxId.replace("box_", "");
+	      				console.log("start: " + draggedBoxId);
+				},
+	      		stop: function(e, ui) {
+	      				console.log("stop: " + draggedBoxId);
+						updateBoxPosition(e, ui, draggedBoxId);
+				},
+			}
       }).data('gridster');
       	var widgets = [
       		<% Box.where(user_id: current_user.id).each do |box| %>
-          		["<li id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=((@box_time[box.id] <= 480)? 1 : (@box_time[box.id] / 480.0).to_i) * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\", \"<%=box.color%>\")'><%=@box_time[box.id]%></li>", <%=(@box_time[box.id] / 480.0).to_i%>, <%=(@box_time[box.id] / 480.0).to_i%>],	
+          		["<li id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=((@box_time[box.id] <= 480)? 1 : (@box_time[box.id] / 480.0).to_i) * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\", \"<%=box.color%>\")'><%=@box_time[box.id]%></li>", <%=(@box_time[box.id] / 480.0).to_i%>, <%=(@box_time[box.id] / 480.0).to_i%>, <%=box.pos_x%>, <%=box.pos_y%>],	
           	<% end %>
       	];
 
@@ -253,5 +276,19 @@
 			$("#addtodowrapper").hide();
 		});
 		return false;
+	}
+
+
+	function updateBoxPosition(e, ui, id) {
+		// save new position
+		$.ajax({
+		  type: "PUT",
+		  url: "/boxes/updateBoxes",
+		  data: {data: gridster.serialize()},
+		  dataType: "script"
+		})
+		.done(function( html ) {
+			
+		});
 	}
 </script>

@@ -80,6 +80,23 @@ class BoxesController < ApplicationController
     end
   end
 
+  def updateBoxes
+    # parse hash and update box positions
+    data = params['data']
+    data.each do |box|
+      parsedBox =  box[1]
+      id = parsedBox['id'].to_s.sub("box_", "")
+      boxDB = Box.find(id)
+      boxDB.pos_x = parsedBox['col'].to_i
+      boxDB.pos_y = parsedBox['row'].to_i
+      boxDB.save
+    end
+
+    respond_to do |format|
+      format.js {render :getGridBoxes, layout: false}
+    end
+  end
+
   def getGridBoxes
     @boxes = Box.where(user_id: current_user.id)
   end
