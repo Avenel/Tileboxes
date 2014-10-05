@@ -166,7 +166,12 @@
       }).data('gridster');
       	var widgets = [
       		<% Box.where(user_id: current_user.id).each do |box| %>
-          		["<li id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=((@box_time[box.id] <= 480)? 1 : (@box_time[box.id] / 480.0).to_i) * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\", \"<%=box.color%>\")'><%=@box_time[box.id]%></li>", <%=(@box_time[box.id] / 180.0).to_i%>, <%=(@box_time[box.id] / 180.0).to_i%>, <%=box.pos_x%>, <%=box.pos_y%>],	
+      			<% time = @box_time[box.id] %>
+      			<% size_x = (time / 120) % 6 %>
+      			<% time -= size_x * 120 %>
+      			<% size_y = (time / 120) % 6 %>
+
+          		["<li id='box_<%=box.id%>'style='background:<%=box.color%>; line-height: <%=((@box_time[box.id] <= 480)? 1 : (@box_time[box.id] / 480.0).to_i) * 40 + 10%>px;' onClick='getTodosForBox(<%=box.id%>, \"<%=box.name%>\", \"<%=box.color%>\")'><%=@box_time[box.id]%></li>", <%=size_x%>, <%=size_y%>, <%=box.pos_x%>, <%=box.pos_y%>],	
           	<% end %>
       	];
 
