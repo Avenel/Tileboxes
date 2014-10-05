@@ -47,7 +47,7 @@
 				    	<table>
 				    		<tr>
 				    			<td><%= f.label :time %></td>
-				    			<td><%= f.number_field :time, :value => "0" %></td>
+				    			<td><%= f.number_field :time, :value => "0", :class => "dial" %></td>
 				    		</tr>
 				    	</table>
 				  	</div>
@@ -113,6 +113,18 @@
 	  	$(function() {
 		    $( "#box_start_date" ).datepicker();
 	  	});
+
+        $(".dial").knob({
+        	'min' : 0, 
+        	'max' : 240,
+        	'width' : 50,
+        	'height': 50,
+        	'step' : 5,
+        	'cursor' : false,
+        	'inputColor' : "#FFFFFF",
+        	'thickness' : 0.3,
+        	 "fgColor":"#EED169"
+        });
 
 	  	$("#colorPicker").tinycolorpicker();
 	});
@@ -197,6 +209,8 @@
 			})
 			.done(function( html ) {
 				$("#todolist").html(html);
+				$("#todo_name").val("");
+				$("#todo_time").val("0");
 			});
 
 			$("#new_todo").unbind();

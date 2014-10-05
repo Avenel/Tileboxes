@@ -3,7 +3,7 @@
 		<table class="todolist-item-table">
 			<tr>
 				<td class="todolist-item-name"><%=todo.name%></td>
-				<td class="todolist-item-time"><%=todo.time%></td>
+				<td class="todolist-item-time"><input type="text" class="dial-todo" value="<%=todo.time%>"></td>
 				<td class="todomodifybtn">
 					<% if !todo.done then %>
 						<%= form_tag("/todos/" + todo.id.to_s, method: "put", id: "setDoneForm_" + todo.id.to_s) do %>
@@ -19,6 +19,21 @@
 
 <script>
 	<%= render  template: "/boxes/getGridBoxes.js.erb" %>
+
+	$(function() {
+		$(".dial-todo").knob({
+        	'min' : 0, 
+        	'max' : 240,
+        	'width' : 25,
+        	'height': 25,
+        	'step' : 5,
+        	'cursor' : false,
+        	'inputColor' : "#FFFFFF",
+        	'thickness' : 0.3,
+        	'readOnly' : true,
+        	"fgColor":"#EED169"
+        });
+	});
 
 	function setDone(id) {
     	$("#setDoneForm_" + id).submit(function() {
