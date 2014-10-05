@@ -1,6 +1,6 @@
 <% @todos.all.each do |todo| %>
 	<li class="todolist-item <%= (todo.done)? 'todolist-item-done' : ''%>" id="todolist-item_<%=todo.id.to_s%>">
-		<table class="todolist-item-table">
+		<table class="todolist-item-table" style="table-layout: fixed;">
 			<tr>
 				<td class="todolist-item-name"><%=todo.name%></td>
 				<td class="todolist-item-time"><input type="text" class="dial-todo" value="<%=todo.time%>"></td>

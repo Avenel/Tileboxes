@@ -97,6 +97,10 @@
     border-radius: 2px;
 }
 
+.todolist-item-name {
+    word-wrap: break-word;
+}
+
  .todolist-item-done {
     color: white;
     background: #aaaaaa;    
@@ -112,6 +116,7 @@
 
 .todolist-item-time {
     text-align: right;
+    width: 65px!important;
 }
 
 .todolist-item-table {
