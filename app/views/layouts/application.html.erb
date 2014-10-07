@@ -13,7 +13,131 @@
 </head>
 <body>
 
-<%= yield %>
+	<div class="snap-drawers">
+        <div class="snap-drawer snap-drawer-left">
+            <div>
+                <div id="title">TimeInBoxes</div>
+				<% if notice %>
+				  <p class="alert alert-success"><%= notice %> <span onClick="hideAlert()" id="hide-alert-btn">x</span></p>
+				<% end %>
+				<% if alert %>
+				  <p class="alert alert-danger"><%= alert %></p>
+				<% end %>
 
-</body>
+				<div id="userstatus">
+					<p class="navbar-text pull-right">
+					<% if user_signed_in? %>
+					  <strong><%= current_user.email %></strong>. <br/>
+					  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+					  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+					<% else %>
+					  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+					  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+					<% end %>
+					</p>
+				</div>
+
+				<div id="todolistwrapper">
+					<table id="boxtitleWrapper">
+						<tr><td><h2 id="boxtitle"> </h2></td>
+							<td id="colorPickerBoxTitleWrapper"></td>
+							<td id="deleteBoxWrapper"></td>
+						</tr>
+					</table>
+					<ul id="todolist"></ul>
+					<div id="addtodowrapper">
+						<h3>Add Todo</h3>
+						<%= form_for(@todo) do |f| %>	
+							<div class="field">
+							    <table>
+						    		<tr>
+						    			<td><%= f.label :name %></td>
+							    		<td><%= f.text_field :name %></td>
+							    	</tr>
+							    </table>
+						  	</div>
+
+					  		<div class="field">
+						    	<table>
+						    		<tr>
+						    			<td><%= f.label :time %></td>
+						    			<td><%= f.number_field :time, :value => "0", :class => "dial" %></td>
+						    		</tr>
+						    	</table>
+						  	</div>
+
+						  	<%= f.hidden_field :box_id, :value => "" %>
+						  	<div class="actions">
+						    	<input type="submit" onclick="createTodo()" value="Create Todo"></div>
+						 	</div>
+						<% end %>
+					</div>
+					<div id="addboxwrapper">
+						<h3>Add Box</h3>
+						<%= form_for(@box) do |f| %>
+						  <div class="field">
+						    <table>
+						    		<tr>
+						    			<td><%= f.label :name %></td>
+						    			<td><%= f.text_field :name %></td>
+							    	</tr>
+							    </table>
+						  </div>
+						  <div class="field">
+						    <table>
+						    		<tr>
+						    			<td><%= f.label :color %></td>
+						    			<td><div id="colorPicker">
+									        <a class="color"><div class="colorInner"></div></a>
+									        <div class="track" style="background-image:url(../images/text-color.png)"></div>
+									        <ul class="dropdown"><li></li></ul>
+									        <input id="box_color" name="box[color]" class="colorInput" type="hidden">
+									    </div></td>
+							    	</tr>
+							    </table>
+						  </div>
+
+						  <input id="box_pos_x" name="box[pos_x]" type="hidden" value="0">
+						  <input id="box_pos_y" name="box[pos_y]" type="hidden" value="0">
+
+						  <div class="actions">
+						    <input type="submit" onclick="createBox()" value="Create Box"></div>
+						  </div>
+						<% end %>
+				</div>
+			</div>
+        </div>
+        <div class="snap-drawer snap-drawer-right"></div>
+
+	    </div>
+	        
+	    <div id="content" class="snap-content">
+	        <div id="toolbar">
+	            <span id="open-left" style="cursor: pointer;"/>
+	            <h1>Timeboard</h1>
+	        </div>
+
+	        <%= yield %>
+	    </div>
+
+    <script>
+    	var snapper = new Snap({
+            element: document.getElementById('content'),
+            disable: 'right'
+        });
+
+        var addEvent = function addEvent(element, eventName, func) {
+			if (element.addEventListener) {
+		    	return element.addEventListener(eventName, func, false);
+		    } else if (element.attachEvent) {
+		        return element.attachEvent("on" + eventName, func);
+		    }
+		};
+
+		addEvent(document.getElementById('open-left'), 'click', function(){
+			snapper.open('left');
+		});
+   </script>
+
+	</body>
 </html>

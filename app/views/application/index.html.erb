@@ -1,105 +1,12 @@
 <table id="wrappertable">
 	<tr>
-	<td id="toolbar">
-		<div id="title">TimeInBoxes</div>
-		<% if notice %>
-		  <p class="alert alert-success"><%= notice %> <span onClick="hideAlert()" id="hide-alert-btn">x</span></p>
-		<% end %>
-		<% if alert %>
-		  <p class="alert alert-danger"><%= alert %></p>
-		<% end %>
-
-		<div id="userstatus">
-			<p class="navbar-text pull-right">
-			<% if user_signed_in? %>
-			  <strong><%= current_user.email %></strong>. <br/>
-			  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-			  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-			<% else %>
-			  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-			  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-			<% end %>
-			</p>
-		</div>
-
-		<div id="todolistwrapper">
-			<table id="boxtitleWrapper">
-				<tr><td><h2 id="boxtitle"> </h2></td>
-					<td id="colorPickerBoxTitleWrapper"></td>
-					<td id="deleteBoxWrapper"></td>
-				</tr>
-			</table>
-			<ul id="todolist"></ul>
-			<div id="addtodowrapper">
-				<h3>Add Todo</h3>
-				<%= form_for(@todo) do |f| %>	
-					<div class="field">
-					    <table>
-				    		<tr>
-				    			<td><%= f.label :name %></td>
-					    		<td><%= f.text_field :name %></td>
-					    	</tr>
-					    </table>
-				  	</div>
-
-			  		<div class="field">
-				    	<table>
-				    		<tr>
-				    			<td><%= f.label :time %></td>
-				    			<td><%= f.number_field :time, :value => "0", :class => "dial" %></td>
-				    		</tr>
-				    	</table>
-				  	</div>
-
-				  	<%= f.hidden_field :box_id, :value => "" %>
-				  	<div class="actions">
-				    	<input type="submit" onclick="createTodo()" value="Create Todo"></div>
-				 	</div>
-				<% end %>
+		<td style="vertical-align: top;">
+			<div id="boxeswrapper">
+				<div class="gridster">
+					<ul></ul>
+				</div>
 			</div>
-			<div id="addboxwrapper">
-				<h3>Add Box</h3>
-				<%= form_for(@box) do |f| %>
-				  <div class="field">
-				    <table>
-				    		<tr>
-				    			<td><%= f.label :name %></td>
-				    			<td><%= f.text_field :name %></td>
-					    	</tr>
-					    </table>
-				  </div>
-				  <div class="field">
-				    <table>
-				    		<tr>
-				    			<td><%= f.label :color %></td>
-				    			<td><div id="colorPicker">
-							        <a class="color"><div class="colorInner"></div></a>
-							        <div class="track" style="background-image:url(../images/text-color.png)"></div>
-							        <ul class="dropdown"><li></li></ul>
-							        <input id="box_color" name="box[color]" class="colorInput" type="hidden">
-							    </div></td>
-					    	</tr>
-					    </table>
-				  </div>
-
-				  <input id="box_pos_x" name="box[pos_x]" type="hidden" value="0">
-				  <input id="box_pos_y" name="box[pos_y]" type="hidden" value="0">
-
-				  <div class="actions">
-				    <input type="submit" onclick="createBox()" value="Create Box"></div>
-				  </div>
-				<% end %>
-			</div>
-		</div>
-	</td>
-
-	<td style="vertical-align: top;">
-		<div id="boxeswrapper">
-			<div class="gridster">
-				<ul></ul>
-			</div>
-		</div>
-	</td>
+		</td>
 	</tr>
 </table>
 
@@ -139,10 +46,10 @@
       	gridster = $(".gridster > ul").gridster({
          	widget_margins: [5, 5],
       		widget_base_dimensions: [40, 40],
-      		max_cols: 12,
-      		min_cols: 12,
-      		min_rows: 12,
-      		max_rows: 12,
+      		max_cols: 16,
+      		min_cols: 16,
+      		min_rows: 16,
+      		max_rows: 16,
       		serialize_params:
       			function ($w, wgd) {
 			    return {
@@ -234,6 +141,7 @@
 				  dataType: "script"
 				});
 		    });
+		    snapper.open('left');
 
 		  });
     }
