@@ -17,6 +17,8 @@
 	</li>
 <% end %>
 
+<li id="hide-done-tasks" onclick="showDoneTasks()">Show done tasks</li>
+
 <script>
 	<%= render  template: "/boxes/getGridBoxes.js.erb" %>
 
@@ -49,4 +51,17 @@
 			return false;
 		});	
     }
+
+   	function hideDoneTasks() {
+   		$(".todolist-item-done").hide();
+   		$("#hide-done-tasks").html("Show done tasks");
+   		$("#hide-done-tasks").attr("onclick", "showDoneTasks()");
+   	}
+
+   	function showDoneTasks() {
+   		$(".todolist-item-done").show();
+   		$("#hide-done-tasks").html("Hide done tasks");
+   		$("#hide-done-tasks").attr("onclick", "hideDoneTasks()");
+   	}
+
 </script>
