@@ -13,6 +13,7 @@
 </head>
 <body>
 
+	<% if !@box.nil? %>
 	<div class="snap-drawers">
         <div class="snap-drawer snap-drawer-left">
             <div>
@@ -116,9 +117,11 @@
 	            <span id="open-left" style="cursor: pointer;"/>
 	            <h1>Timeboard</h1>
 	        </div>
-
+	<% end %>
 	        <%= yield %>
+    <% if !@box.nil? %>
 	    </div>
+   <% end %>
 
     <script>
     	var snapper = new Snap({
